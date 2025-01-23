@@ -1,0 +1,23 @@
+var xhr = new XMLHttpRequest();  // Crear el objeto XMLHttpRequest
+xhr.open('GET', 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMSkillsNetwork-JS0101EN-SkillsNetwork/health.json', true);  // Configurar la solicitud (GET) y la URL
+
+// Configurar lo que debe hacer cuando se reciba la respuesta
+xhr.onload = function() {
+    if (xhr.status === 200) {  // Verificar si la solicitud fue exitosa (status 200)
+        var data = xhr.responseText;  // Obtener la respuesta en formato texto (JSON)
+        
+        // Crear un archivo Blob con el contenido de la respuesta
+        var blob = new Blob([data], { type: 'application/json' });
+
+        // Crear un enlace para descargar el archivo
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);  // Crear una URL para el Blob
+        link.download = 'health.json';  // Nombre del archivo que se descargará
+        link.click();  // Simular el clic en el enlace para iniciar la descarga
+    } else {
+        console.error('Error al obtener los datos: ' + xhr.status);  // Manejar errores
+    }
+};
+
+// Enviar la solicitud
+xhr.send();
